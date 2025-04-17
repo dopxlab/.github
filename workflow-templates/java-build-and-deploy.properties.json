@@ -9,6 +9,6 @@
         "Argocd"
     ],
     "filePatterns": [
-        "pom.xml"
+        "^pom\\.xml$"
     ]
 }
