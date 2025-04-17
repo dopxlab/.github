@@ -1,0 +1,20 @@
+name: Build and Deploy Spring Boot App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  call-shared-workflow:
+    uses: github-actions/.github/workflows/java-build-deploy.yml@main
+    with:
+      oci_reg_user: '${{ secrets.OCI_REG_USER }}'
+      docker_image_push_prefix: '${{ secrets.DOCKER_IMAGE_PUSH_PREFIX }}'
+      gitops_repository: '${{ secrets.GITOPS_REPO }}'
+    secrets:
+      oci_reg_password: ${{ secrets.OCI_REG_PASSWORD }}
+      gitops_pat: ${{ secrets.GITOPS_PAT }}
