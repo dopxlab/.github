@@ -1,14 +1,14 @@
 {
-    "name": "XyZ CICD",
+    "name": "DOX CICD Workflow",
     "description": "CICD Pipline will build your project, Creates Docker image, Pushes Docker Image, Creates Helm Chart, push Helm Chart and deploy your project into kubernetes cluster based on your branching strategy",
     "iconName": "cicd",
     "categories": [
         "Java",
-        "Angular"
+        "Docker",
+        "Helm",
+        "Argocd"
     ],
     "filePatterns": [
-        "package.json$",
-        "^Dockerfile",
-        ".*\\.md$"
+        "pom.xml"
     ]
 }
