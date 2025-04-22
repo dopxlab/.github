@@ -15,6 +15,9 @@ jobs:
       oci_reg_user: ${{ vars.OCI_REG_USER }}
       docker_image_push_prefix: ${{ vars.DOCKER_IMAGE_PUSH_PREFIX }}
       gitops_repository: ${{ vars.GITOPS_REPO }}
+      app_configmap: ${{ vars.APP_CONFIGMAP }}
+      app_secret: ${{ vars.APP_SECRET }}
+      app_pvc: ${{ vars.APP_PVC }}
     secrets:
       oci_reg_password: ${{ secrets.OCI_REG_PASSWORD }}
       gitops_pat: ${{ secrets.GITOPS_PAT }}
