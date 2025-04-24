@@ -1,23 +1,41 @@
+# Name of the workflow shown in GitHub Actions UI
 name: DOX Java CICD
 
+# Workflow trigger definitions
 on:
   push:
     branches:
-      - main
-
-  workflow_dispatch: # allows manual trigger from GitHub UI
+      - master  # Trigger when pushing to the master branch
+  workflow_dispatch:  # Allows manual triggering from the GitHub UI
 
 jobs:
   call-dox-java-cicd:
-    uses: dopxlab/github-actions/.github/workflows/dox-java-cicd.yml@main
+    # Reuse a predefined workflow from a shared repository
+    uses: adsr/github-actions/.github/workflows/java-cicd.yml@master
+
+    # Parameters passed to the reused workflow
     with:
-      oci_reg_host: ${{ vars.OCI_REG_HOST }}
-      oci_reg_user: ${{ vars.OCI_REG_USER }}
-      docker_image_push_prefix: ${{ vars.DOCKER_IMAGE_PUSH_PREFIX }}
-      gitops_repository: ${{ vars.GITOPS_REPO }}
-      app_configmap: ${{ vars.APP_CONFIGMAP }}
-      app_secret: ${{ vars.APP_SECRET }}
-      app_pvc: ${{ vars.APP_PVC }}
+      oci_reg_host: ${{ vars.OCI_REG_HOST }}  # Docker registry host
+      oci_reg_user: ${{ vars.OCI_REG_USER }}  # Docker registry user
+      docker_image_push_prefix: ${{ vars.DOCKER_IMAGE_PUSH_PREFIX }}  # Docker image tag prefix
+      gitops_repository: ${{ vars.GITOPS_REPO }}  # GitOps repository used for deployments (gitops-argocd repository)
+
+      # Optional: Java version to use (default: 17)
+      #jdk_version: 21
+
+      # Optional Kubernetes secret configuration - for deployment
+      #secret_name: ""  # Optional: reference to an existing secret
+      #secret_mount_path: ""  # Optional: mount path for the secret in the container (default: inject as env vars)
+
+      # Optional Kubernetes ConfigMap configuration - for deployment
+      #config_map_name: ""  # Optional: reference to an existing ConfigMap
+      #config_map_mount_path: ""  # Optional: mount path for ConfigMap (default: inject as env vars)
+
+      # Optional Kubernetes PVC (Persistent Volume Claim) - for deployments
+      #pvc_name: ""  # Optional: reference to an existing PVC
+      #pvc_mount_path: ""  # Optional: mount path for the PVC (default: /data)
+
+    # Secret values securely provided by GitHub Actions
     secrets:
-      oci_reg_password: ${{ secrets.OCI_REG_PASSWORD }}
-      gitops_pat: ${{ secrets.GITOPS_PAT }}
+      oci_reg_password: ${{ secrets.OCI_REG_PASSWORD }}  # Secret for authenticating to OCI registry
+      gitops_pat: ${{ secrets.GITOPS_PAT }}  # Personal access token for updating GitOps repository (gitops-argocd repository)
