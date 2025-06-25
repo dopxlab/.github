@@ -11,7 +11,7 @@ on:
 jobs:
   call-dox-java-cicd:
     # Reuse a predefined workflow from a shared repository
-    uses: dopxlab/github-actions/.github/workflows/dox-java-cicd.yml@main
+    uses: dopxlab/dox-github-actions/.github/workflows/dox-java-cicd.yml@main
 
     # Parameters passed to the reused workflow
     with:
